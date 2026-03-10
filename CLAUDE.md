@@ -3,10 +3,9 @@
 ## Stack
 
 - **Vue 3.4+** with Composition API (`<script setup>`)
-- **Tailwind CSS 3.4+** - Utility-first CSS
-- **TypeScript 5.4+** in strict mode
-- **Vite 5.2+** - Build tool with HMR
-- **PostCSS** with Autoprefixer
+- **Tailwind CSS 4** - Utility-first CSS (via `@tailwindcss/vite` plugin)
+- **TypeScript 5.9+** in strict mode
+- **Vite 7** - Build tool with HMR
 
 ## Development Commands
 
@@ -109,12 +108,12 @@ npm install lucide-vue-next
 
 ## Tailwind Plugins
 
-Add to `tailwind.config.js`:
-```javascript
-plugins: [
-  require('@tailwindcss/forms'),
-  require('@tailwindcss/typography'),
-]
+Tailwind CSS 4 uses the Vite plugin (`@tailwindcss/vite`) instead of `tailwind.config.js`. Install plugins as npm packages and import them in your CSS:
+```css
+/* src/style.css */
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
 ```
 
 ## Common Utility Patterns
