@@ -24,16 +24,20 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Run unit tests (vitest)
+npm test
 ```
 
 ## Project Structure
 
 ```
 src/
-├── App.vue          # Root component
+├── App.vue          # Root component (includes dark mode toggle)
+├── App.test.ts      # Component tests (vitest + @vue/test-utils)
 ├── main.ts          # Entry point
 ├── style.css        # Tailwind directives + theme variables
-└── vite-env.d.ts    # Type declarations
+└── vite-env.d.ts    # Type declarations (strict, no any)
 ```
 
 ## Key Patterns
@@ -71,10 +75,56 @@ Colors are defined as CSS variables in `src/style.css`:
 Access via Tailwind: `bg-primary`, `text-foreground`, `border-border`
 
 ### Dark Mode
-Toggle dark mode by adding/removing `dark` class on `<html>`:
+`App.vue` includes a working dark mode toggle button. The pattern uses an `isDark` ref synced to the `<html>` element's `dark` class:
+
 ```typescript
-document.documentElement.classList.toggle('dark')
+import { ref, onMounted } from 'vue'
+
+const isDark = ref(true)
+
+onMounted(() => {
+  isDark.value = document.documentElement.classList.contains('dark')
+})
+
+function toggleDark() {
+  isDark.value = !isDark.value
+  document.documentElement.classList.toggle('dark', isDark.value)
+}
 ```
+
+The toggle button uses `v-if="isDark"` to swap between sun and moon icons and sets `aria-label` dynamically for accessibility.
+
+## Security
+
+### Content Security Policy
+`index.html` includes a CSP `<meta>` tag restricting resource loading to `'self'` (with `unsafe-inline` for Tailwind runtime styles in dev mode):
+
+```html
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
+```
+
+### Type Safety
+`src/vite-env.d.ts` uses strict `DefineComponent` without `any` type parameters to avoid unsafe widening of Vue component types.
+
+## Testing
+
+Tests use **Vitest** with `@vue/test-utils` and `jsdom`. Run with `npm test`. Test files follow the `*.test.ts` pattern alongside source files.
+
+```typescript
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import App from './App.vue'
+
+describe('App', () => {
+  it('renders h1 with text', () => {
+    const wrapper = mount(App)
+    expect(wrapper.find('h1').text()).toContain('Vue 3')
+  })
+})
+```
+
+Vitest is configured in `vite.config.ts` with `environment: 'jsdom'` and `globals: true`.
 
 ## Adding Features
 
