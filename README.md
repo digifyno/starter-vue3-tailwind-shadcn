@@ -19,6 +19,9 @@ npm install
 # Start dev server
 npm run dev
 
+# Type check without building
+vue-tsc --noEmit
+
 # Build for production
 npm run build
 
@@ -36,8 +39,6 @@ npm run preview
 │   └── vite-env.d.ts    # TypeScript declarations
 ├── index.html           # HTML entry point
 ├── vite.config.ts       # Vite configuration
-├── tailwind.config.js   # Tailwind configuration
-├── postcss.config.js    # PostCSS configuration
 ├── tsconfig.json        # TypeScript config
 └── package.json
 ```
@@ -48,7 +49,12 @@ npm run preview
 Edit `src/style.css` to customize the color palette. Colors are defined using HSL CSS variables for easy light/dark mode switching.
 
 ### Tailwind Configuration
-Modify `tailwind.config.js` to add custom utilities, plugins, or extend the theme.
+Tailwind CSS 4 uses CSS-based configuration. Edit `src/style.css` to add custom utilities or plugins:
+```css
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+```
 
 ### Dark Mode
 The template includes dark mode by default. Toggle by adding/removing the `dark` class on the `<html>` element.
