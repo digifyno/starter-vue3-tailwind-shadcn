@@ -11,7 +11,7 @@
         
         <div class="p-8">
           <div class="space-y-4">
-            <div v-for="feature in features" :key="feature.title" 
+            <div v-for="feature in features" :key="feature.title" data-testid="feature-item" 
                  class="flex items-start space-x-3 p-4 rounded-md bg-secondary/50 hover:bg-secondary transition-colors">
               <div class="flex-shrink-0">
                 <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
