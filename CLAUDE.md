@@ -17,7 +17,7 @@ npm install
 npm run dev
 
 # Type check without building
-vue-tsc --noEmit
+npm run typecheck
 
 # Build for production
 npm run build
