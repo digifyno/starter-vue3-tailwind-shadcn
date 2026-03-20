@@ -198,6 +198,8 @@ npm run build
 
 Serve `dist/` with any static file server (nginx, Vercel, Netlify, etc.).
 
+Build targets `es2022` (Chrome 94+, Firefox 93+, Safari 16+) with source maps enabled for production debugging.
+
 ## Resources
 
 - [Tailwind CSS Utilities](https://tailwindcss.com/docs)
