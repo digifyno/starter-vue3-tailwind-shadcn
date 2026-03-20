@@ -32,7 +32,13 @@ npm test
 ## Project Structure
 
 ```
+public/
+└── favicon.svg      # Site favicon
+
 src/
+├── components/
+│   ├── WelcomeCard.vue     # Example card component (props, emits, Tailwind)
+│   └── WelcomeCard.test.ts
 ├── App.vue          # Root component (includes dark mode toggle)
 ├── App.test.ts      # Component tests (vitest + @vue/test-utils)
 ├── main.ts          # Entry point
@@ -80,6 +86,8 @@ Access via Tailwind: `bg-primary`, `text-foreground`, `border-border`
 ```typescript
 import { ref, onMounted } from 'vue'
 
+// Initializes to true because index.html sets class="dark" on <html>.
+// onMounted syncs the ref to actual DOM state.
 const isDark = ref(true)
 
 onMounted(() => {
@@ -93,6 +101,8 @@ function toggleDark() {
 ```
 
 The toggle button uses `v-if="isDark"` to swap between sun and moon icons and sets `aria-label` dynamically for accessibility.
+
+> **Note:** The initial `ref(true)` assumes dark mode is the default (set by `class="dark"` on `<html>` in `index.html`). If you remove that class, change the initial value to `false`.
 
 ## Security
 
