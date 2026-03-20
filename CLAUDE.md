@@ -114,6 +114,9 @@ The toggle button uses `v-if="isDark"` to swap between sun and moon icons and se
   content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
 ```
 
+### HTML Language Attribute
+`index.html` sets `lang="en"` on the `<html>` element, satisfying WCAG 2.1 SC 3.1.1 (Level A) so screen readers select the correct voice profile automatically.
+
 ### Type Safety
 `src/vite-env.d.ts` uses strict `DefineComponent` without `any` type parameters to avoid unsafe widening of Vue component types.
 
