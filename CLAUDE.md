@@ -27,6 +27,13 @@ npm run preview
 
 # Run unit tests (vitest)
 npm test
+
+# Lint source files
+npm run lint
+
+# Auto-fix lint issues
+npm run lint:fix
+
 ```
 
 ## Project Structure
