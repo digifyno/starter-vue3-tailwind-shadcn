@@ -225,3 +225,17 @@ Build targets `es2022` (Chrome 94+, Firefox 93+, Safari 16+) with source maps en
 - [Tailwind CSS Utilities](https://tailwindcss.com/docs)
 - [shadcn-vue Components](https://www.shadcn-vue.com/)
 - [Vue 3 Composition API](https://vuejs.org/guide/extras/composition-api-faq.html)
+
+
+## Error Tracking
+
+Runtime errors are reported to the Client Error Intelligence Hub (production only). Configure via env vars:
+
+- `VITE_HUB_TOKEN` — RSI Hub WorkerHub token (required to enable reporting)
+- `VITE_HUB_URL` — Hub base URL (e.g., `https://rsi.digify.no`)
+
+Implementation: `src/error-tracking.ts`. Captures:
+- Unhandled Vue component errors (via `app.config.errorHandler`)
+- Unhandled promise rejections (via `window.addEventListener('unhandledrejection', ...)`)
+
+Error reporting is a no-op when `VITE_HUB_TOKEN` is not set or when running in development — no console noise, no errors thrown.
