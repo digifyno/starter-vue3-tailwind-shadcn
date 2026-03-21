@@ -39,18 +39,20 @@ npm run lint:fix
 ## Project Structure
 
 ```
+eslint.config.js  # ESLint config (vue3-essential + a11y rules)
 public/
 └── favicon.svg      # Site favicon
 
 src/
 ├── components/
-│   ├── WelcomeCard.vue     # Example card component (props, emits, Tailwind)
+│   ├── WelcomeCard.vue      # Example card component (props, emits, Tailwind)
 │   └── WelcomeCard.test.ts
-├── App.vue          # Root component (includes dark mode toggle)
-├── App.test.ts      # Component tests (vitest + @vue/test-utils)
-├── main.ts          # Entry point
-├── style.css        # Tailwind directives + theme variables
-└── vite-env.d.ts    # Type declarations (strict, no any)
+├── App.vue           # Root component (includes dark mode toggle)
+├── App.test.ts       # Component tests (vitest + @vue/test-utils)
+├── error-tracking.ts # Client Error Intelligence Hub integration (no-op in dev)
+├── main.ts           # Entry point
+├── style.css         # Tailwind directives + theme variables
+└── vite-env.d.ts     # Type declarations (strict, no any)
 ```
 
 ## Key Patterns
