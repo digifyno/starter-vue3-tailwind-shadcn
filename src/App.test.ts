@@ -15,4 +15,9 @@ describe('App', () => {
     const items = wrapper.findAll('[data-testid="feature-item"]')
     expect(items.length).toBeGreaterThan(0)
   })
+
+  it('has main-content id for skip navigation', () => {
+    const wrapper = mount(App)
+    expect(wrapper.find('#main-content').exists()).toBe(true)
+  })
 })
