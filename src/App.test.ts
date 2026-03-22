@@ -82,7 +82,7 @@ describe('App', () => {
 
   it('page has a main landmark element', () => {
     const wrapper = mount(App)
-    // App uses div#main-content as the page landmark (no <main> tag)
+    // App uses <main id="main-content"> as the page landmark
     const main = wrapper.find('#main-content')
     expect(main.exists()).toBe(true)
   })
@@ -96,5 +96,39 @@ describe('App', () => {
     await toggle.trigger('click')
     expect(toggle.attributes('aria-label')).not.toBe(initialLabel)
     document.documentElement.classList.remove('dark')
+  })
+})
+
+describe('Accessibility', () => {
+  // Note: The skip-to-content link (<a href="#main-content">) is in index.html (static HTML)
+  // and is not rendered by the App component — it cannot be tested via component mount.
+
+  it('toggle button aria-pressed reflects dark mode state', async () => {
+    document.documentElement.classList.add('dark')
+    const wrapper = mount(App)
+    const button = wrapper.find('button[aria-label]')
+    // isDark initialises to true (dark mode active), so aria-pressed starts as "true"
+    expect(button.attributes('aria-pressed')).toBe('true')
+    await button.trigger('click')
+    expect(button.attributes('aria-pressed')).toBe('false')
+    document.documentElement.classList.remove('dark')
+  })
+
+  it('SVG icons inside the toggle button have aria-hidden="true"', () => {
+    document.documentElement.classList.add('dark')
+    const wrapper = mount(App)
+    const button = wrapper.find('button[aria-label]')
+    const svgs = button.findAll('svg')
+    expect(svgs.length).toBeGreaterThan(0)
+    svgs.forEach(svg => {
+      expect(svg.attributes('aria-hidden')).toBe('true')
+    })
+    document.documentElement.classList.remove('dark')
+  })
+
+  it('a main element with id="main-content" exists', () => {
+    const wrapper = mount(App)
+    const main = wrapper.find('main#main-content')
+    expect(main.exists()).toBe(true)
   })
 })

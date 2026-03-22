@@ -1,5 +1,5 @@
 <template>
-  <div id="main-content" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+  <main id="main-content" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
     <div class="max-w-2xl w-full mx-4">
       <div class="bg-card border border-border rounded-lg shadow-2xl overflow-hidden">
         <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-center relative">
@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">
