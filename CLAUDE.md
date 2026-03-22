@@ -39,6 +39,7 @@ npm run lint:fix
 ## Project Structure
 
 ```
+index.html             # Entry HTML: lang="en", class="dark" (default dark mode), skip-to-content link, CSP meta tag
 eslint.config.js  # ESLint config (eslint-plugin-vue flat/essential + eslint-plugin-vuejs-accessibility flat/recommended)
 public/
 └── favicon.svg      # Site favicon
@@ -123,6 +124,9 @@ The toggle button uses `v-if="isDark"` to swap between sun and moon icons and se
 
 ### HTML Language Attribute
 `index.html` sets `lang="en"` on the `<html>` element, satisfying WCAG 2.1 SC 3.1.1 (Level A) so screen readers select the correct voice profile automatically.
+
+### Skip-to-Content Link
+`index.html` includes a visually-hidden skip link (`<a href="#main-content">`) that becomes visible on focus, satisfying WCAG 2.1 SC 2.4.1 (Level A). The `<main>` element in `App.vue` carries the matching `id="main-content"`.
 
 ### Type Safety
 `src/vite-env.d.ts` uses strict `DefineComponent` without `any` type parameters to avoid unsafe widening of Vue component types.
