@@ -39,7 +39,7 @@ npm run lint:fix
 ## Project Structure
 
 ```
-eslint.config.js  # ESLint config (vue3-essential + a11y rules)
+eslint.config.js  # ESLint config (eslint-plugin-vue flat/essential + eslint-plugin-vuejs-accessibility flat/recommended)
 public/
 └── favicon.svg      # Site favicon
 
