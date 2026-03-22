@@ -5,6 +5,7 @@
         <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-center relative">
           <button
             @click="toggleDark"
+            :aria-pressed="isDark"
             :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
             class="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors text-white"
           >
