@@ -28,8 +28,8 @@
         </div>
 
         <div class="p-8">
-          <div class="space-y-4">
-            <div v-for="feature in features" :key="feature.title" data-testid="feature-item"
+          <ul class="space-y-4 list-none p-0">
+            <li v-for="feature in features" :key="feature.title" data-testid="feature-item"
                  class="flex items-start space-x-3 p-4 rounded-md bg-secondary/50 hover:bg-secondary transition-colors">
               <div class="flex-shrink-0">
                 <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
@@ -42,8 +42,8 @@
                 <h3 class="font-semibold text-foreground">{{ feature.title }}</h3>
                 <p class="text-sm text-muted-foreground">{{ feature.description }}</p>
               </div>
-            </div>
-          </div>
+            </li>
+          </ul>
 
           <div class="mt-8 pt-6 border-t border-border">
             <div class="flex justify-center">
