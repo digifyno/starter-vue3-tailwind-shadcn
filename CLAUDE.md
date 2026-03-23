@@ -89,28 +89,36 @@ Colors are defined as CSS variables in `src/style.css`:
 Access via Tailwind: `bg-primary`, `text-foreground`, `border-border`
 
 ### Dark Mode
-`App.vue` includes a working dark mode toggle button. The pattern uses an `isDark` ref synced to the `<html>` element's `dark` class:
+`App.vue` includes a working dark mode toggle button. The preference is persisted to `localStorage` under the key `'color-scheme'` so it survives page reloads.
 
 ```typescript
 import { ref, onMounted } from 'vue'
 
-// Initializes to true because index.html sets class="dark" on <html>.
-// onMounted syncs the ref to actual DOM state.
+const STORAGE_KEY = 'color-scheme'
 const isDark = ref(true)
 
 onMounted(() => {
-  isDark.value = document.documentElement.classList.contains('dark')
+  const stored = localStorage.getItem(STORAGE_KEY)
+  if (stored !== null) {
+    isDark.value = stored === 'dark'
+  } else {
+    // Fall back to the class set on <html> in index.html
+    isDark.value = document.documentElement.classList.contains('dark')
+  }
+  // Sync DOM to stored (or detected) preference
+  document.documentElement.classList.toggle('dark', isDark.value)
 })
 
 function toggleDark() {
   isDark.value = !isDark.value
   document.documentElement.classList.toggle('dark', isDark.value)
+  localStorage.setItem(STORAGE_KEY, isDark.value ? 'dark' : 'light')
 }
 ```
 
 The toggle button uses `v-if="isDark"` to swap between sun and moon icons and sets `aria-label` dynamically for accessibility.
 
-> **Note:** The initial `ref(true)` assumes dark mode is the default (set by `class="dark"` on `<html>` in `index.html`). If you remove that class, change the initial value to `false`.
+> **Note:** On first visit (no stored preference), the initial value defaults to `true` (dark) and is reconciled with the DOM in `onMounted`. If you remove the `class="dark"` from `index.html`, change the initial `ref(true)` to `ref(false)`.
 
 ## Security
 
