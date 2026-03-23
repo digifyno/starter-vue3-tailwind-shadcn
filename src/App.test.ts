@@ -110,6 +110,40 @@ describe('App', () => {
     expect(localStorage.getItem('color-scheme')).toBe('light')
   })
 
+describe('dark mode localStorage persistence', () => {
+  afterEach(() => {
+    localStorage.clear()
+    document.documentElement.classList.remove('dark')
+  })
+
+  it('initializes dark mode from localStorage when set to dark', () => {
+    localStorage.setItem('color-scheme', 'dark')
+    mount(App)
+    expect(document.documentElement.classList.contains('dark')).toBe(true)
+  })
+
+  it('initializes light mode from localStorage when set to light', () => {
+    localStorage.setItem('color-scheme', 'light')
+    mount(App)
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
+  })
+
+  it('saves dark mode preference to localStorage on toggle', async () => {
+    localStorage.clear()
+    const wrapper = mount(App)
+    const button = wrapper.find('button[aria-label]')
+    await button.trigger('click')
+    expect(localStorage.getItem('color-scheme')).not.toBeNull()
+  })
+
+  it('falls back to DOM class check when localStorage has no entry', () => {
+    localStorage.clear()
+    document.documentElement.classList.add('dark')
+    mount(App)
+    expect(document.documentElement.classList.contains('dark')).toBe(true)
+  })
+})
+
 describe('Accessibility', () => {
   beforeEach(() => {
     localStorage.clear()
