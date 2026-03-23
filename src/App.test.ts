@@ -3,6 +3,10 @@ import { mount } from '@vue/test-utils'
 import App from './App.vue'
 
 describe('App', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   it('renders h1 with text', () => {
     const wrapper = mount(App)
     const h1 = wrapper.find('h1')
@@ -99,7 +103,18 @@ describe('App', () => {
   })
 })
 
+  it('persists dark mode preference to localStorage', async () => {
+    localStorage.setItem('color-scheme', 'dark')
+    const wrapper = mount(App)
+    await wrapper.find('[aria-label]').trigger('click') // toggle to light
+    expect(localStorage.getItem('color-scheme')).toBe('light')
+  })
+
 describe('Accessibility', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   // Note: The skip-to-content link (<a href="#main-content">) is in index.html (static HTML)
   // and is not rendered by the App component — it cannot be tested via component mount.
 

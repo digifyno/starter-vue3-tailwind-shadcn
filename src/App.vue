@@ -69,18 +69,25 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
+const STORAGE_KEY = 'color-scheme'
+
 const isDark = ref(true)
 
 onMounted(() => {
-  isDark.value = document.documentElement.classList.contains('dark')
-  if (isDark.value) {
-    document.documentElement.classList.add('dark')
+  const stored = localStorage.getItem(STORAGE_KEY)
+  if (stored !== null) {
+    isDark.value = stored === 'dark'
+  } else {
+    isDark.value = document.documentElement.classList.contains('dark')
   }
+  // Sync DOM to stored preference
+  document.documentElement.classList.toggle('dark', isDark.value)
 })
 
 function toggleDark() {
   isDark.value = !isDark.value
   document.documentElement.classList.toggle('dark', isDark.value)
+  localStorage.setItem(STORAGE_KEY, isDark.value ? 'dark' : 'light')
 }
 
 const features = [
