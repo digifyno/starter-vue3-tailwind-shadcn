@@ -42,6 +42,14 @@ describe('reportError', () => {
       reportError(new Error('test'))
       expect(fetch).not.toHaveBeenCalled()
     })
+    it('does not log to console when in no-op path', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      // Default test env: PROD=false, no token — both guards trigger no-op
+      const { reportError } = await import('./error-tracking')
+      reportError(new Error('should not log'))
+      expect(consoleSpy).not.toHaveBeenCalled()
+      consoleSpy.mockRestore()
+    })
   })
 
   describe('active error reporting', () => {
@@ -75,6 +83,14 @@ describe('reportError', () => {
       const body = JSON.parse(init.body)
       expect(body.message).toBe('vue component error')
       expect(body.stack).toBe(error.stack)
+    })
+
+    it('includes window.location.href in request body', async () => {
+      const { reportError } = await import('./error-tracking')
+      reportError(new Error('location test'))
+      const [, init] = (fetch as ReturnType<typeof vi.fn>).mock.calls[0]
+      const body = JSON.parse(init.body)
+      expect(typeof body.url).toBe('string')
     })
 
     it('includes optional context in request body — Vue errorHandler path', async () => {
