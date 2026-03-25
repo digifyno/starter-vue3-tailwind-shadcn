@@ -234,4 +234,29 @@ describe('HTML structural attributes', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(true)
     wrapper.unmount()
   })
+
+  it('updates aria-label text when dark mode is toggled', async () => {
+    document.documentElement.classList.add('dark')
+    const wrapper = mount(App, { attachTo: document.body })
+    const btn = wrapper.find('button[aria-label]')
+    const initialLabel = btn.attributes('aria-label')
+    expect(initialLabel).toBeTruthy()
+    await btn.trigger('click')
+    const newLabel = btn.attributes('aria-label')
+    expect(newLabel).toBeTruthy()
+    expect(newLabel).not.toBe(initialLabel) // label must change on toggle
+    wrapper.unmount()
+    document.documentElement.classList.remove('dark')
+  })
+
+  it('toggle button has button role and is keyboard accessible', async () => {
+    const wrapper = mount(App, { attachTo: document.body })
+    const btn = wrapper.find('button[aria-label]')
+    expect(btn.element.tagName).toBe('BUTTON') // native button = keyboard accessible by default
+    expect(btn.attributes('aria-pressed')).toBeDefined()
+    // Native <button> elements receive Enter/Space by default in all browsers
+    // Verify it is not [tabindex="-1"] which would remove it from tab order
+    expect(btn.attributes('tabindex')).not.toBe('-1')
+    wrapper.unmount()
+  })
 })
