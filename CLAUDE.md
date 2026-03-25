@@ -156,7 +156,7 @@ describe('App', () => {
 })
 ```
 
-Currently covered: dark mode toggle interaction, localStorage persistence, skip-to-content link, `<main>` landmark, SVG `aria-hidden`, `aria-pressed` state, prefers-reduced-motion behavior, and error tracking (Vue errorHandler + unhandledrejection).
+Currently covered: dark mode toggle interaction, localStorage persistence, skip-to-content link, `<main>` landmark, SVG `aria-hidden`, `aria-pressed` state, prefers-reduced-motion behavior, error tracking (Vue errorHandler + unhandledrejection), `lang="en"` on `<html>`, and initial `class="dark"` on `<html>`. Note: CSP meta tag cannot be tested in jsdom (index.html is not parsed); verify via index.html inspection or e2e tests.
 
 Vitest is configured in `vite.config.ts` with `environment: 'jsdom'` and `globals: true`.
 
