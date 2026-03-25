@@ -50,7 +50,7 @@ src/
 ├── error-tracking.ts        # Client Error Intelligence Hub integration (no-op in dev)
 ├── error-tracking.test.ts   # Unit tests for error-tracking integration
 ├── main.ts                  # Entry point
-├── style.css                # Tailwind directives + theme variables
+├── style.css                # Tailwind directives, theme variables, prefers-reduced-motion rules
 └── vite-env.d.ts            # Type declarations (strict, no any)
 ```
 
@@ -155,6 +155,8 @@ describe('App', () => {
   })
 })
 ```
+
+Currently covered: dark mode toggle interaction, localStorage persistence, skip-to-content link, `<main>` landmark, SVG `aria-hidden`, `aria-pressed` state, prefers-reduced-motion behavior, and error tracking (Vue errorHandler + unhandledrejection).
 
 Vitest is configured in `vite.config.ts` with `environment: 'jsdom'` and `globals: true`.
 
