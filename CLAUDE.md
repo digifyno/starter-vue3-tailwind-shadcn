@@ -40,9 +40,13 @@ npm run lint:fix
 
 ```
 index.html             # Entry HTML: lang="en", class="dark" (default dark mode), skip-to-content link, CSP meta tag
-eslint.config.js  # ESLint config (eslint-plugin-vue flat/essential + eslint-plugin-vuejs-accessibility flat/recommended)
+vite.config.ts         # Vite build config + Vitest test runner (environment: 'jsdom', globals: true)
+tsconfig.json          # TypeScript config (strict mode, ES2020 target)
+tsconfig.node.json     # TypeScript config for Node/Vite tooling
+eslint.config.js       # ESLint flat config (eslint-plugin-vue essential + vuejs-accessibility recommended)
+README.md              # Project overview and quick-start guide
 public/
-└── favicon.svg      # Site favicon
+└── favicon.svg        # Site favicon
 
 src/
 ├── App.vue                  # Root component (includes dark mode toggle)
