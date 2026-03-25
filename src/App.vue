@@ -7,7 +7,7 @@
             @click="toggleDark"
             :aria-pressed="isDark"
             :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-            class="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors text-white"
+            class="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors text-white focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             <!-- Sun icon: shown in dark mode to switch to light -->
             <svg v-if="isDark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
