@@ -181,3 +181,26 @@ describe('Accessibility', () => {
     expect(main.exists()).toBe(true)
   })
 })
+
+describe('prefers-reduced-motion', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('mounts without errors when prefers-reduced-motion: reduce is active', () => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation(query => ({
+        matches: query === '(prefers-reduced-motion: reduce)',
+        media: query,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      }))
+    })
+
+    const wrapper = mount(App)
+    expect(wrapper.find('main').exists()).toBe(true)
+  })
+})
