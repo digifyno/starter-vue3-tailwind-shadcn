@@ -134,7 +134,7 @@ The toggle button uses `v-if="isDark"` to swap between sun and moon icons and se
 `index.html` sets `lang="en"` on the `<html>` element, satisfying WCAG 2.1 SC 3.1.1 (Level A) so screen readers select the correct voice profile automatically.
 
 ### Skip-to-Content Link
-`index.html` includes a visually-hidden skip link (`<a href="#main-content">`) that becomes visible on focus, satisfying WCAG 2.1 SC 2.4.1 (Level A). The `<main>` element in `App.vue` carries the matching `id="main-content"`.
+`index.html` includes a visually-hidden skip link (`<a href="#main-content">`) that becomes visible on keyboard focus via `focus-visible` styles, satisfying WCAG 2.1 SC 2.4.1 (Level A). The `<main>` element in `App.vue` carries the matching `id="main-content"`. The dark mode toggle button similarly uses explicit `focus-visible` ring styles for keyboard accessibility.
 
 ### Type Safety
 `src/vite-env.d.ts` uses strict `DefineComponent` without `any` type parameters to avoid unsafe widening of Vue component types.
