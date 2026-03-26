@@ -49,8 +49,11 @@ public/
 └── favicon.svg        # Site favicon
 
 src/
-├── App.vue                  # Root component (includes dark mode toggle)
+├── App.vue                  # Root component (dark mode toggle, skip link, main landmark)
 ├── App.test.ts              # Component tests (vitest + @vue/test-utils)
+├── components/
+│   ├── WelcomeCard.vue      # Example component demonstrating Tailwind patterns
+│   └── WelcomeCard.test.ts  # Unit tests for WelcomeCard
 ├── error-tracking.ts        # Client Error Intelligence Hub integration (no-op in dev)
 ├── error-tracking.test.ts   # Unit tests for error-tracking integration
 ├── main.ts                  # Entry point
@@ -160,7 +163,7 @@ describe('App', () => {
 })
 ```
 
-Currently covered: dark mode toggle interaction, localStorage persistence, skip-to-content link, `<main>` landmark, SVG `aria-hidden`, `aria-pressed` state, prefers-reduced-motion behavior, error tracking (Vue errorHandler + unhandledrejection), `lang="en"` on `<html>`, initial `class="dark"` on `<html>`, dynamic aria-label update, and keyboard accessibility. Note: CSP meta tag cannot be tested in jsdom (index.html is not parsed); verify via index.html inspection or e2e tests.
+Currently covered: dark mode toggle interaction, localStorage persistence, skip-to-content link, `<main>` landmark, SVG `aria-hidden`, `aria-pressed` state, prefers-reduced-motion behavior, error tracking (no-op in dev/missing-token/missing-URL, no console noise on no-op path, POST to Hub API with auth header and error payload, optional context for Vue errorHandler and unhandledrejection paths, silent fetch failure), `lang="en"` on `<html>`, initial `class="dark"` on `<html>`, dynamic aria-label update, keyboard accessibility, WelcomeCard rendering (title, description, default/footer slots), and WelcomeCard accessibility (aria-disabled attribute, disabled visual state). Note: CSP meta tag cannot be tested in jsdom (index.html is not parsed); verify via index.html inspection or e2e tests.
 
 Vitest is configured in `vite.config.ts` with `environment: 'jsdom'` and `globals: true`.
 
