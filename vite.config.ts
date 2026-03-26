@@ -19,5 +19,17 @@ export default defineConfig({
     globals: true,
     pool: "forks",
     setupFiles: ["vitest-setup.ts"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      include: ["src/**/*.{ts,vue}"],
+      exclude: ["src/vite-env.d.ts", "src/main.ts"],
+      thresholds: {
+        statements: 80,
+        branches: 75,
+        functions: 80,
+        lines: 80
+      }
+    }
   }
 })
