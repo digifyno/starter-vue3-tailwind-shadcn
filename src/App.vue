@@ -40,7 +40,7 @@
                 </div>
               </div>
               <div>
-                <h3 class="font-semibold text-foreground">{{ feature.title }}</h3>
+                <h2 class="font-semibold text-foreground text-base">{{ feature.title }}</h2>
                 <p class="text-sm text-muted-foreground">{{ feature.description }}</p>
               </div>
             </li>

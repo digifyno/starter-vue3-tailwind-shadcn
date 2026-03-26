@@ -34,7 +34,8 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/**/*.test.ts"
+    "src/**/*.test.ts",
+    "vitest-setup.ts"
   ],
   "references": [
     {

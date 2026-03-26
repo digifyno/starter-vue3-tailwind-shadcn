@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { axe } from 'vitest-axe'
 import { mount } from '@vue/test-utils'
 import App from './App.vue'
 
@@ -258,5 +259,21 @@ describe('HTML structural attributes', () => {
     // Verify it is not [tabindex="-1"] which would remove it from tab order
     expect(btn.attributes('tabindex')).not.toBe('-1')
     wrapper.unmount()
+  })
+})
+
+describe('Accessibility (axe)', () => {
+  it('has no axe violations on initial render (light mode)', async () => {
+    const wrapper = mount(App)
+    const results = await axe(wrapper.element)
+    expect(results).toHaveNoViolations()
+  })
+
+  it('has no axe violations in dark mode', async () => {
+    document.documentElement.classList.add('dark')
+    const wrapper = mount(App)
+    const results = await axe(wrapper.element)
+    expect(results).toHaveNoViolations()
+    document.documentElement.classList.remove('dark')
   })
 })
