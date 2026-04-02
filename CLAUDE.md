@@ -28,6 +28,9 @@ npm run preview
 # Run unit tests (vitest)
 npm test
 
+# Generate test coverage report
+npm run test:coverage
+
 # Lint source files
 npm run lint
 
@@ -43,6 +46,7 @@ index.html             # Entry HTML: lang="en", class="dark" (default dark mode)
 vite.config.ts         # Vite build config + Vitest test runner (environment: 'jsdom', globals: true)
 tsconfig.json          # TypeScript config (strict mode, ES2020 target)
 tsconfig.node.json     # TypeScript config for Node/Vite tooling
+vitest-setup.ts        # Vitest global setup: registers vitest-axe matchers
 eslint.config.js       # ESLint flat config (eslint-plugin-vue essential + vuejs-accessibility recommended)
 README.md              # Project overview and quick-start guide
 public/
@@ -134,7 +138,7 @@ The toggle button uses `v-if="isDark"` to swap between sun and moon icons and se
 
 ```html
 <meta http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
+  content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://rsi.digify.no;">
 ```
 
 ### HTML Language Attribute
