@@ -36,6 +36,15 @@ describe('WelcomeCard', () => {
     expect(wrapper.find('button').text()).toBe('Action')
   })
 
+  it('omits header section when no title and no header slot', () => {
+    const wrapper = mount(WelcomeCard)
+    // The header div only renders when title or header slot is provided
+    const headerDivs = wrapper
+      .findAll('div')
+      .filter(d => d.classes().includes('bg-primary\/5'))
+    expect(headerDivs.length).toBe(0)
+  })
+
   it('omits footer section when footer slot is absent', () => {
     const wrapper = mount(WelcomeCard, { props: { title: 'Card' } })
     // footer div only renders when slot is provided
