@@ -3,6 +3,7 @@
     class="rounded-lg border border-border bg-card text-card-foreground shadow-sm overflow-hidden"
     :class="{ 'opacity-50 pointer-events-none': disabled }"
     :aria-disabled="disabled || undefined"
+    :inert="disabled || undefined"
   >
     <div v-if="title || $slots.header" class="border-b border-border px-6 py-4 bg-primary/5">
       <slot name="header">

@@ -64,5 +64,15 @@ describe('WelcomeCard', () => {
       const wrapper = mount(WelcomeCard, { props: { title: 'Enabled' } })
       expect(wrapper.attributes('aria-disabled')).toBeUndefined()
     })
+
+    it('root element has inert attribute when disabled', () => {
+      const wrapper = mount(WelcomeCard, { props: { title: 'Disabled', disabled: true } })
+      expect(wrapper.attributes('inert')).toBeDefined()
+    })
+
+    it('root element does not have inert attribute when enabled', () => {
+      const wrapper = mount(WelcomeCard, { props: { title: 'Enabled' } })
+      expect(wrapper.attributes('inert')).toBeUndefined()
+    })
   })
 })
