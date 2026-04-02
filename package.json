@@ -8,8 +8,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint \"src/**/*.vue\"",
-    "lint:fix": "eslint \"src/**/*.vue\" --fix",
+    "lint": "eslint \"src/**/*.{vue,ts}\"",
+    "lint:fix": "eslint \"src/**/*.{vue,ts}\" --fix",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
