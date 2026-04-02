@@ -104,13 +104,6 @@ describe('App', () => {
   })
 })
 
-  it('persists dark mode preference to localStorage', async () => {
-    localStorage.setItem('color-scheme', 'dark')
-    const wrapper = mount(App)
-    await wrapper.find('[aria-label]').trigger('click') // toggle to light
-    expect(localStorage.getItem('color-scheme')).toBe('light')
-  })
-
 describe('dark mode localStorage persistence', () => {
   afterEach(() => {
     localStorage.clear()
