@@ -8,6 +8,10 @@ describe('App', () => {
     localStorage.clear()
   })
 
+  afterEach(() => {
+    document.documentElement.classList.remove('dark')
+  })
+
   it('renders h1 with text', () => {
     const wrapper = mount(App)
     const h1 = wrapper.find('h1')
@@ -35,7 +39,6 @@ describe('App', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(false)
     await button.trigger('click')
     expect(document.documentElement.classList.contains('dark')).toBe(true)
-    document.documentElement.classList.remove('dark')
   })
 
   it('changes aria-label when dark mode is toggled', async () => {
@@ -45,7 +48,6 @@ describe('App', () => {
     expect(button.attributes('aria-label')).toBe('Switch to light mode')
     await button.trigger('click')
     expect(button.attributes('aria-label')).toBe('Switch to dark mode')
-    document.documentElement.classList.remove('dark')
   })
 
   it('documentation link has correct rel and target attributes', () => {
@@ -72,7 +74,6 @@ describe('App', () => {
     expect(toggle.attributes('aria-label')).toMatch(/light mode/i)
     await toggle.trigger('click')
     expect(toggle.attributes('aria-label')).toMatch(/dark mode/i)
-    document.documentElement.classList.remove('dark')
   })
 
   it('external links have rel noopener noreferrer and open in new tab', () => {
@@ -100,7 +101,6 @@ describe('App', () => {
     await toggle.trigger('keydown', { key: 'Enter' })
     await toggle.trigger('click')
     expect(toggle.attributes('aria-label')).not.toBe(initialLabel)
-    document.documentElement.classList.remove('dark')
   })
 })
 
