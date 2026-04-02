@@ -29,7 +29,8 @@
         </div>
 
         <div class="p-8">
-          <ul class="space-y-4 list-none p-0">
+          <!-- eslint-disable-next-line vuejs-accessibility/no-redundant-roles -- list-none removes Safari/VoiceOver list semantics; role="list" restores them -->
+          <ul class="space-y-4 list-none p-0" role="list">
             <li v-for="feature in features" :key="feature.title" data-testid="feature-item"
                  class="flex items-start space-x-3 p-4 rounded-md bg-secondary/50 hover:bg-secondary transition-colors">
               <div class="flex-shrink-0">
@@ -40,7 +41,7 @@
                 </div>
               </div>
               <div>
-                <h2 class="font-semibold text-foreground text-base">{{ feature.title }}</h2>
+                <strong class="font-semibold text-foreground text-base">{{ feature.title }}</strong>
                 <p class="text-sm text-muted-foreground">{{ feature.description }}</p>
               </div>
             </li>
