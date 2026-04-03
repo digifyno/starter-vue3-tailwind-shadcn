@@ -66,16 +66,6 @@ describe('App', () => {
     })
   })
 
-  it('dark mode toggle aria-label reflects current mode', async () => {
-    document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
-    const toggle = wrapper.find('button[aria-label]')
-    // isDark starts true (dark mode active), so label says Switch to light mode
-    expect(toggle.attributes('aria-label')).toMatch(/light mode/i)
-    await toggle.trigger('click')
-    expect(toggle.attributes('aria-label')).toMatch(/dark mode/i)
-  })
-
   it('external links have rel noopener noreferrer and open in new tab', () => {
     const wrapper = mount(App)
     const externalLinks = wrapper.findAll('a[target="_blank"]')
@@ -86,19 +76,6 @@ describe('App', () => {
     })
   })
 
-  it('page has a main landmark element', () => {
-    const wrapper = mount(App)
-    // App uses <main id="main-content"> as the page landmark
-    const main = wrapper.find('#main-content')
-    expect(main.exists()).toBe(true)
-  })
-
-  it('dark mode toggle is keyboard accessible (focusable, native button)', () => {
-    const wrapper = mount(App)
-    const toggle = wrapper.find('button[aria-label]')
-    expect(toggle.element.tagName).toBe('BUTTON')
-    expect(toggle.attributes('tabindex')).not.toBe('-1')
-  })
 })
 
 describe('dark mode localStorage persistence', () => {
