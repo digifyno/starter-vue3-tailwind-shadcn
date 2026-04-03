@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { axe } from 'vitest-axe'
 import WelcomeCard from './WelcomeCard.vue'
 
 describe('WelcomeCard', () => {
@@ -83,5 +84,33 @@ describe('WelcomeCard', () => {
       const wrapper = mount(WelcomeCard, { props: { title: 'Enabled' } })
       expect(wrapper.attributes('inert')).toBeUndefined()
     })
+  })
+})
+
+describe('Accessibility (axe)', () => {
+  // Disable the 'region' rule: components are tested in isolation without a
+  // page landmark, so the rule would always fire as a false positive.
+  const axeOptions = { rules: { region: { enabled: false } } }
+
+  it('has no axe violations in default (enabled) state', async () => {
+    const wrapper = mount(WelcomeCard, {
+      props: { title: 'Accessible Card', description: 'A description' },
+    })
+    const results = await axe(wrapper.element, axeOptions)
+    expect(results).toHaveNoViolations()
+  })
+
+  it('has no axe violations in disabled state', async () => {
+    const wrapper = mount(WelcomeCard, {
+      props: { title: 'Disabled Card', disabled: true },
+    })
+    const results = await axe(wrapper.element, axeOptions)
+    expect(results).toHaveNoViolations()
+  })
+
+  it('has no axe violations without title or description', async () => {
+    const wrapper = mount(WelcomeCard)
+    const results = await axe(wrapper.element, axeOptions)
+    expect(results).toHaveNoViolations()
   })
 })
