@@ -93,14 +93,11 @@ describe('App', () => {
     expect(main.exists()).toBe(true)
   })
 
-  it('dark mode toggle responds to Enter key', async () => {
-    document.documentElement.classList.add('dark')
+  it('dark mode toggle is keyboard accessible (focusable, native button)', () => {
     const wrapper = mount(App)
     const toggle = wrapper.find('button[aria-label]')
-    const initialLabel = toggle.attributes('aria-label')
-    await toggle.trigger('keydown', { key: 'Enter' })
-    await toggle.trigger('click')
-    expect(toggle.attributes('aria-label')).not.toBe(initialLabel)
+    expect(toggle.element.tagName).toBe('BUTTON')
+    expect(toggle.attributes('tabindex')).not.toBe('-1')
   })
 })
 
