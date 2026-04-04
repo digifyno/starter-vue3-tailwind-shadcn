@@ -152,7 +152,7 @@ The toggle button uses `v-if="isDark"` to swap between sun and moon icons and se
 
 ## Testing
 
-Tests use **Vitest** with `@vue/test-utils` and `jsdom`. Run with `npm test`. Test files follow the `*.test.ts` pattern alongside source files.
+Tests use **Vitest** with `@vue/test-utils`, `jsdom`, and **vitest-axe** (accessibility assertions). Run with `npm test`. Test files follow the `*.test.ts` pattern alongside source files.
 
 ```typescript
 import { describe, it, expect } from 'vitest'
