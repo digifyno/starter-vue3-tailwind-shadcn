@@ -117,6 +117,10 @@ describe('Accessibility', () => {
     localStorage.clear()
   })
 
+  afterEach(() => {
+    document.documentElement.classList.remove('dark')
+  })
+
   // Note: The skip-to-content link (<a href="#main-content">) is in index.html (static HTML)
   // and is not rendered by the App component — it cannot be tested via component mount.
 
@@ -128,7 +132,6 @@ describe('Accessibility', () => {
     expect(button.attributes('aria-pressed')).toBe('true')
     await button.trigger('click')
     expect(button.attributes('aria-pressed')).toBe('false')
-    document.documentElement.classList.remove('dark')
   })
 
   it('SVG icons inside the toggle button have aria-hidden="true"', () => {
@@ -140,7 +143,6 @@ describe('Accessibility', () => {
     svgs.forEach(svg => {
       expect(svg.attributes('aria-hidden')).toBe('true')
     })
-    document.documentElement.classList.remove('dark')
   })
 
   it('a main element with id="main-content" exists', () => {
@@ -230,6 +232,10 @@ describe('HTML structural attributes', () => {
 })
 
 describe('Accessibility (axe)', () => {
+  afterEach(() => {
+    document.documentElement.classList.remove('dark')
+  })
+
   it('has no axe violations on initial render (light mode)', async () => {
     const wrapper = mount(App)
     const results = await axe(wrapper.element)
@@ -241,6 +247,5 @@ describe('Accessibility (axe)', () => {
     const wrapper = mount(App)
     const results = await axe(wrapper.element)
     expect(results).toHaveNoViolations()
-    document.documentElement.classList.remove('dark')
   })
 })
