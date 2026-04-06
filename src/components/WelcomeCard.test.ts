@@ -51,7 +51,7 @@ describe('WelcomeCard', () => {
     // footer div only renders when slot is provided
     const footerDivs = wrapper
       .findAll('div')
-      .filter(d => d.classes().includes('bg-muted\\/30'))
+      .filter(d => d.classes().includes('bg-muted/30'))
     expect(footerDivs.length).toBe(0)
   })
 
