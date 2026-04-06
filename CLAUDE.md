@@ -222,7 +222,7 @@ Tailwind CSS 4 uses the Vite plugin (`@tailwindcss/vite`) instead of `tailwind.c
 
 ### Hover/Focus States
 ```vue
-<button class="bg-primary hover:bg-primary/90 focus:ring-2 focus:ring-ring">
+<button class="bg-primary hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring">
   Click me
 </button>
 ```
