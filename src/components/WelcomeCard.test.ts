@@ -37,6 +37,13 @@ describe('WelcomeCard', () => {
     expect(wrapper.find('button').text()).toBe('Action')
   })
 
+  it('renders header slot content when provided', () => {
+    const wrapper = mount(WelcomeCard, {
+      slots: { header: '<span data-testid="custom-header">Custom Header</span>' },
+    })
+    expect(wrapper.find('[data-testid="custom-header"]').text()).toBe('Custom Header')
+  })
+
   it('omits header section when no title and no header slot', () => {
     const wrapper = mount(WelcomeCard)
     // The header div only renders when title or header slot is provided
