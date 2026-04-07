@@ -98,10 +98,11 @@ describe('dark mode localStorage persistence', () => {
 
   it('saves dark mode preference to localStorage on toggle', async () => {
     localStorage.clear()
+    // No dark class set → onMounted resolves isDark to false
     const wrapper = mount(App)
     const button = wrapper.find('button[aria-label]')
-    await button.trigger('click')
-    expect(localStorage.getItem('color-scheme')).not.toBeNull()
+    await button.trigger('click') // toggles from false → true
+    expect(localStorage.getItem('color-scheme')).toBe('dark')
   })
 
   it('falls back to DOM class check when localStorage has no entry', () => {
