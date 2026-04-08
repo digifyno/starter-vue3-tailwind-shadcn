@@ -242,6 +242,10 @@ describe('HTML structural attributes', () => {
 })
 
 describe('Accessibility (axe)', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   afterEach(() => {
     document.documentElement.classList.remove('dark')
   })
