@@ -79,6 +79,10 @@ describe('App', () => {
 })
 
 describe('dark mode localStorage persistence', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   afterEach(() => {
     localStorage.clear()
     document.documentElement.classList.remove('dark')
