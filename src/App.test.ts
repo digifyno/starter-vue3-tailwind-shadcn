@@ -190,6 +190,10 @@ describe('prefers-reduced-motion', () => {
 })
 
 describe('HTML structural attributes', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   afterEach(() => {
     localStorage.clear()
     document.documentElement.classList.remove('dark')
