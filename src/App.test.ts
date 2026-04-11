@@ -167,6 +167,11 @@ describe('Accessibility', () => {
 })
 
 describe('prefers-reduced-motion', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    document.documentElement.classList.remove('dark')
+  })
+
   afterEach(() => {
     vi.restoreAllMocks()
   })
