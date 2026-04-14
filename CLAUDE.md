@@ -169,7 +169,7 @@ describe('App', () => {
 
 Currently covered: dark mode toggle interaction, localStorage persistence, skip-to-content link, `<main>` landmark, SVG `aria-hidden`, `aria-pressed` state, prefers-reduced-motion behavior, error tracking (no-op in dev/missing-token/missing-URL, no console noise on no-op path, POST to Hub API with auth header and error payload, optional context for Vue errorHandler and unhandledrejection paths, silent fetch failure), `lang="en"` on `<html>`, initial `class="dark"` on `<html>`, dynamic aria-label update, keyboard accessibility, WelcomeCard rendering (title, description, default/footer/header slots, header-absent branch), WelcomeCard accessibility (aria-disabled attribute, inert attribute, disabled visual state), and WelcomeCard axe accessibility (no violations in default/disabled/empty states). Note: CSP meta tag cannot be tested in jsdom (index.html is not parsed); verify via index.html inspection or e2e tests.
 
-All `describe` blocks that interact with localStorage or the DOM `dark` class use both `beforeEach(() => localStorage.clear())` and `afterEach` to restore DOM state — no localStorage or class leakage between suites.
+All `describe` blocks that interact with localStorage or the DOM `dark` class use both `beforeEach(() => localStorage.clear())` and `afterEach` to restore DOM state — no localStorage or class leakage between suites. The `prefers-reduced-motion` suite mocks `window.matchMedia` via `vi.stubGlobal('matchMedia', ...)` and cleans up with `vi.restoreAllMocks()` + `vi.unstubAllGlobals()` in `afterEach`, avoiding the `Object.defineProperty` pattern that does not restore properly between tests.
 
 Vitest is configured in `vite.config.ts` with `environment: 'jsdom'` and `globals: true`.
 
