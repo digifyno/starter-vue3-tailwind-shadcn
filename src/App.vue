@@ -1,7 +1,7 @@
 <template>
-  <main id="main-content" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-    <div class="max-w-2xl w-full mx-4">
-      <div class="bg-card border border-border rounded-lg shadow-2xl overflow-hidden">
+  <main id="main-content" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12">
+    <div class="max-w-2xl w-full mx-4 space-y-6">
+      <Card class="shadow-2xl overflow-hidden">
         <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-center relative">
           <button
             @click="toggleDark"
@@ -28,7 +28,7 @@
           <p class="text-blue-100">Modern utility-first CSS framework</p>
         </div>
 
-        <div class="p-8">
+        <CardContent class="p-8">
           <!-- eslint-disable-next-line vuejs-accessibility/no-redundant-roles -- list-none removes Safari/VoiceOver list semantics; role="list" restores them -->
           <ul class="space-y-4 list-none p-0" role="list">
             <li v-for="feature in features" :key="feature.title" data-testid="feature-item"
@@ -40,35 +40,47 @@
                   </svg>
                 </div>
               </div>
-              <div>
-                <strong class="font-semibold text-foreground text-base">{{ feature.title }}</strong>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <strong class="font-semibold text-foreground text-base">{{ feature.title }}</strong>
+                  <Badge variant="secondary">{{ feature.tag }}</Badge>
+                </div>
                 <p class="text-sm text-muted-foreground">{{ feature.description }}</p>
               </div>
             </li>
           </ul>
+        </CardContent>
 
-          <div class="mt-8 pt-6 border-t border-border">
-            <div class="flex justify-center">
-              <a href="https://tailwindcss.com/docs"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 aria-label="View Documentation (opens in new tab)"
-                 class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors shadow-lg">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                </svg>
-                View Documentation
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+        <CardFooter class="px-8 pb-8 pt-0 border-t border-border justify-center">
+          <Button as-child size="lg" class="shadow-lg">
+            <a href="https://tailwindcss.com/docs"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="View Documentation (opens in new tab)">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+              </svg>
+              View Documentation
+            </a>
+          </Button>
+        </CardFooter>
+      </Card>
+
+      <WelcomeCard title="Component Example" description="This starter ships with a reusable WelcomeCard component that composes header, body, and footer slots with accessible markup.">
+        <code class="block rounded bg-muted px-4 py-3 text-sm font-mono text-muted-foreground whitespace-pre">&lt;WelcomeCard title="Hello" :disabled="false"&gt;
+  slot content here
+&lt;/WelcomeCard&gt;</code>
+      </WelcomeCard>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import WelcomeCard from '@/components/WelcomeCard.vue'
 
 const STORAGE_KEY = 'color-scheme'
 
@@ -94,19 +106,23 @@ function toggleDark() {
 const features = [
   {
     title: 'Vue 3 Composition API',
-    description: 'Modern reactive framework with TypeScript support'
+    description: 'Modern reactive framework with TypeScript support',
+    tag: 'v3.5+',
   },
   {
     title: 'Tailwind CSS Utilities',
-    description: 'Rapidly build custom designs with utility classes'
+    description: 'Rapidly build custom designs with utility classes',
+    tag: 'v4',
   },
   {
     title: 'TypeScript Support',
-    description: 'Full type safety and IntelliSense'
+    description: 'Full type safety and IntelliSense',
+    tag: 'strict',
   },
   {
     title: 'Vite for Fast HMR',
-    description: 'Lightning-fast development experience'
-  }
+    description: 'Lightning-fast development experience',
+    tag: 'v7',
+  },
 ]
 </script>
