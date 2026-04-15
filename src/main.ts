@@ -1,9 +1,11 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import { router } from './router'
 import { reportError } from './error-tracking'
 
 const app = createApp(App)
+app.use(router)
 
 app.config.errorHandler = (err, _instance, info) => {
   reportError(err as Error, { vueInfo: info })

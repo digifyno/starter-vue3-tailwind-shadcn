@@ -1,7 +1,18 @@
 import { describe, it, expect } from 'vitest'
 import { axe } from 'vitest-axe'
-import { mount } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 import App from './App.vue'
+
+const mountApp = (options = {}) =>
+  mount(App, {
+    global: {
+      stubs: {
+        RouterView: true,
+        RouterLink: RouterLinkStub,
+      },
+    },
+    ...options,
+  })
 
 describe('App', () => {
   beforeEach(() => {
@@ -12,27 +23,22 @@ describe('App', () => {
     document.documentElement.classList.remove('dark')
   })
 
-  it('renders h1 with text', () => {
-    const wrapper = mount(App)
-    const h1 = wrapper.find('h1')
-    expect(h1.exists()).toBe(true)
-    expect(h1.text()).toContain('Vue 3')
-  })
-
-  it('renders feature items with data-testid', () => {
-    const wrapper = mount(App)
-    const items = wrapper.findAll('[data-testid="feature-item"]')
-    expect(items.length).toBeGreaterThan(0)
-  })
-
   it('has main-content id for skip navigation', () => {
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     expect(wrapper.find('#main-content').exists()).toBe(true)
+  })
+
+  it('renders navigation links to Home and Components', () => {
+    const wrapper = mountApp()
+    const links = wrapper.findAllComponents(RouterLinkStub)
+    const tos = links.map(l => l.props('to'))
+    expect(tos).toContain('/')
+    expect(tos).toContain('/components')
   })
 
   it('toggles dark class on html element when button is clicked', async () => {
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const button = wrapper.find('button[aria-label]')
     expect(document.documentElement.classList.contains('dark')).toBe(true)
     await button.trigger('click')
@@ -43,39 +49,20 @@ describe('App', () => {
 
   it('changes aria-label when dark mode is toggled', async () => {
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const button = wrapper.find('button[aria-label]')
     expect(button.attributes('aria-label')).toBe('Switch to light mode')
     await button.trigger('click')
     expect(button.attributes('aria-label')).toBe('Switch to dark mode')
   })
 
-  it('documentation link has correct rel and target attributes', () => {
-    const wrapper = mount(App)
-    const link = wrapper.find('a[href]')
-    expect(link.attributes('target')).toBe('_blank')
-    expect(link.attributes('rel')).toBe('noopener noreferrer')
-    expect(link.attributes('aria-label')).toContain('opens in new tab')
-  })
-
   it('decorative SVG icons have aria-hidden', () => {
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const svgs = wrapper.findAll('svg')
     svgs.forEach(svg => {
       expect(svg.attributes('aria-hidden')).toBe('true')
     })
   })
-
-  it('external links have rel noopener noreferrer and open in new tab', () => {
-    const wrapper = mount(App)
-    const externalLinks = wrapper.findAll('a[target="_blank"]')
-    expect(externalLinks.length).toBeGreaterThan(0)
-    externalLinks.forEach(link => {
-      expect(link.attributes('rel')).toContain('noopener')
-      expect(link.attributes('rel')).toContain('noreferrer')
-    })
-  })
-
 })
 
 describe('dark mode localStorage persistence', () => {
@@ -90,20 +77,20 @@ describe('dark mode localStorage persistence', () => {
 
   it('initializes dark mode from localStorage when set to dark', () => {
     localStorage.setItem('color-scheme', 'dark')
-    mount(App)
+    mountApp()
     expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
 
   it('initializes light mode from localStorage when set to light', () => {
     localStorage.setItem('color-scheme', 'light')
-    mount(App)
+    mountApp()
     expect(document.documentElement.classList.contains('dark')).toBe(false)
   })
 
   it('saves dark mode preference to localStorage on toggle', async () => {
     localStorage.clear()
     // No dark class set → onMounted resolves isDark to false
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const button = wrapper.find('button[aria-label]')
     await button.trigger('click') // toggles from false → true
     expect(localStorage.getItem('color-scheme')).toBe('dark')
@@ -112,7 +99,7 @@ describe('dark mode localStorage persistence', () => {
   it('saves light mode preference to localStorage on toggle', async () => {
     localStorage.setItem('color-scheme', 'dark')
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const button = wrapper.find('button[aria-label]')
     await button.trigger('click') // toggles from true → false
     expect(localStorage.getItem('color-scheme')).toBe('light')
@@ -121,7 +108,7 @@ describe('dark mode localStorage persistence', () => {
   it('falls back to DOM class check when localStorage has no entry', () => {
     localStorage.clear()
     document.documentElement.classList.add('dark')
-    mount(App)
+    mountApp()
     expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
 })
@@ -140,7 +127,7 @@ describe('Accessibility', () => {
 
   it('toggle button aria-pressed reflects dark mode state', async () => {
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const button = wrapper.find('button[aria-label]')
     // isDark initialises to true (dark mode active), so aria-pressed starts as "true"
     expect(button.attributes('aria-pressed')).toBe('true')
@@ -150,7 +137,7 @@ describe('Accessibility', () => {
 
   it('SVG icons inside the toggle button have aria-hidden="true"', () => {
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const button = wrapper.find('button[aria-label]')
     const svgs = button.findAll('svg')
     expect(svgs.length).toBeGreaterThan(0)
@@ -160,7 +147,7 @@ describe('Accessibility', () => {
   })
 
   it('a main element with id="main-content" exists', () => {
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const main = wrapper.find('main#main-content')
     expect(main.exists()).toBe(true)
   })
@@ -187,7 +174,7 @@ describe('prefers-reduced-motion', () => {
       dispatchEvent: vi.fn(),
     })))
 
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     expect(wrapper.find('main').exists()).toBe(true)
   })
 })
@@ -221,14 +208,19 @@ describe('HTML structural attributes', () => {
     // index.html sets class="dark" on <html> as the default theme.
     // Mirror that initial DOM state for jsdom:
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     expect(document.documentElement.classList.contains('dark')).toBe(true)
     wrapper.unmount()
   })
 
   it('updates aria-label text when dark mode is toggled', async () => {
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App, { attachTo: document.body })
+    const wrapper = mount(App, {
+      attachTo: document.body,
+      global: {
+        stubs: { RouterView: true, RouterLink: RouterLinkStub },
+      },
+    })
     const btn = wrapper.find('button[aria-label]')
     const initialLabel = btn.attributes('aria-label')
     expect(initialLabel).toBeTruthy()
@@ -241,7 +233,12 @@ describe('HTML structural attributes', () => {
   })
 
   it('toggle button has button role and is keyboard accessible', async () => {
-    const wrapper = mount(App, { attachTo: document.body })
+    const wrapper = mount(App, {
+      attachTo: document.body,
+      global: {
+        stubs: { RouterView: true, RouterLink: RouterLinkStub },
+      },
+    })
     const btn = wrapper.find('button[aria-label]')
     expect(btn.element.tagName).toBe('BUTTON') // native button = keyboard accessible by default
     expect(btn.attributes('aria-pressed')).toBeDefined()
@@ -262,14 +259,14 @@ describe('Accessibility (axe)', () => {
   })
 
   it('has no axe violations on initial render (light mode)', async () => {
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const results = await axe(wrapper.element)
     expect(results).toHaveNoViolations()
   })
 
   it('has no axe violations in dark mode', async () => {
     document.documentElement.classList.add('dark')
-    const wrapper = mount(App)
+    const wrapper = mountApp()
     const results = await axe(wrapper.element)
     expect(results).toHaveNoViolations()
   })
