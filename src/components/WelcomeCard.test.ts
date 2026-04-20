@@ -44,6 +44,17 @@ describe('WelcomeCard', () => {
     expect(wrapper.find('[data-testid="custom-header"]').text()).toBe('Custom Header')
   })
 
+  it('renders header slot content and ignores title prop when both are provided', () => {
+    const wrapper = mount(WelcomeCard, {
+      props: { title: 'Prop Title' },
+      slots: { header: '<span data-testid="slot-header">Slot Header</span>' },
+    })
+    expect(wrapper.find('[data-testid="slot-header"]').text()).toBe('Slot Header')
+    // The h2 fallback containing the prop title must NOT appear
+    const h2 = wrapper.find('h2')
+    expect(h2.exists()).toBe(false)
+  })
+
   it('omits header section when no title and no header slot', () => {
     const wrapper = mount(WelcomeCard)
     // The header div only renders when title or header slot is provided
