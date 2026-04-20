@@ -124,6 +124,13 @@ describe('dark mode localStorage persistence', () => {
     mount(App)
     expect(document.documentElement.classList.contains('dark')).toBe(true)
   })
+
+  it('defaults to light mode when no localStorage and no dark class on html', () => {
+    localStorage.clear()
+    document.documentElement.classList.remove('dark')
+    mount(App)
+    expect(document.documentElement.classList.contains('dark')).toBe(false)
+  })
 })
 
 describe('Accessibility', () => {

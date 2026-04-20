@@ -13,6 +13,7 @@ describe('reportError', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
     vi.unstubAllEnvs()
+    vi.restoreAllMocks()
   })
 
   describe('no-op behavior', () => {
