@@ -29,6 +29,15 @@ describe('WelcomeCard', () => {
     expect(wrapper.find('[data-testid="body"]').text()).toBe('body content')
   })
 
+  it('renders both description and default slot content when both are provided', () => {
+    const wrapper = mount(WelcomeCard, {
+      props: { title: 'Card', description: 'A description' },
+      slots: { default: '<span data-testid="body">body content</span>' },
+    })
+    expect(wrapper.find('p').text()).toBe('A description')
+    expect(wrapper.find('[data-testid="body"]').text()).toBe('body content')
+  })
+
   it('renders footer slot when provided', () => {
     const wrapper = mount(WelcomeCard, {
       props: { title: 'Card' },
