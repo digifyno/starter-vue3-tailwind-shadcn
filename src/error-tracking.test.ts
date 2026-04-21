@@ -117,5 +117,13 @@ describe('reportError', () => {
       const { reportError } = await import('./error-tracking')
       expect(() => reportError(new Error('test'))).not.toThrow()
     })
+
+    it('strips trailing slash from VITE_HUB_URL when constructing endpoint', async () => {
+      vi.stubEnv('VITE_HUB_URL', 'https://hub.example.com/')
+      const { reportError } = await import('./error-tracking')
+      reportError(new Error('test'))
+      const [url] = (fetch as ReturnType<typeof vi.fn>).mock.calls[0]
+      expect(url).toBe('https://hub.example.com/hub/client-errors/report')
+    })
   })
 })

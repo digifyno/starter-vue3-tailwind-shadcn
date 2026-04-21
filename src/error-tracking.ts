@@ -4,7 +4,7 @@
 // Only reports in production (import.meta.env.PROD); silently skipped otherwise.
 
 const HUB_TOKEN = import.meta.env.VITE_HUB_TOKEN
-const HUB_URL = import.meta.env.VITE_HUB_URL || ''
+const HUB_URL = (import.meta.env.VITE_HUB_URL || '').replace(/\/$/, '')
 
 export function reportError(error: Error, context?: Record<string, unknown>): void {
   if (!import.meta.env.PROD || !HUB_TOKEN || !HUB_URL) return
