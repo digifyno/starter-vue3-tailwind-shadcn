@@ -118,6 +118,22 @@ describe('reportError', () => {
       expect(() => reportError(new Error('test'))).not.toThrow()
     })
 
+    it('does not throw when fetch resolves with a non-ok response', async () => {
+      ;(fetch as ReturnType<typeof vi.fn>).mockResolvedValue({ ok: false, status: 500 })
+      const { reportError } = await import('./error-tracking')
+      expect(() => reportError(new Error('server error'))).not.toThrow()
+    })
+
+    it('does not log to console when fetch resolves with a non-ok response', async () => {
+      ;(fetch as ReturnType<typeof vi.fn>).mockResolvedValue({ ok: false, status: 500 })
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const { reportError } = await import('./error-tracking')
+      reportError(new Error('server error'))
+      await Promise.resolve()
+      expect(consoleSpy).not.toHaveBeenCalled()
+      consoleSpy.mockRestore()
+    })
+
     it('strips trailing slash from VITE_HUB_URL when constructing endpoint', async () => {
       vi.stubEnv('VITE_HUB_URL', 'https://hub.example.com/')
       const { reportError } = await import('./error-tracking')
