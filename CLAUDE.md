@@ -259,7 +259,7 @@ Build targets `es2022` (Chrome 94+, Firefox 93+, Safari 16+) with source maps en
 Runtime errors are reported to the Client Error Intelligence Hub (production only). Configure via env vars:
 
 - `VITE_HUB_TOKEN` — RSI Hub WorkerHub token (required to enable reporting)
-- `VITE_HUB_URL` — Hub base URL (e.g., `https://rsi.digify.no`)
+- `VITE_HUB_URL` — Hub base URL (e.g., `https://rsi.digify.no`); trailing slashes are stripped automatically
 
 Implementation: `src/error-tracking.ts`. Captures:
 - Unhandled Vue component errors (via `app.config.errorHandler`)
