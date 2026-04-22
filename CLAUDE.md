@@ -263,6 +263,6 @@ Runtime errors are reported to the Client Error Intelligence Hub (production onl
 
 Implementation: `src/error-tracking.ts`. Captures:
 - Unhandled Vue component errors (via `app.config.errorHandler`)
-- Unhandled promise rejections (via `window.addEventListener('unhandledrejection', ...)`)
+- Unhandled promise rejections (via `window.addEventListener('unhandledrejection', ...)`); when `event.reason` is already an `Error`, it is passed through directly so the original stack trace is preserved — non-Error reasons are wrapped with `new Error(String(event.reason))`
 
 Error reporting is a no-op when `VITE_HUB_TOKEN` is not set or when running in development — no console noise, no errors thrown.
