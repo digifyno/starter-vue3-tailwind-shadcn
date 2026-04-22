@@ -11,7 +11,8 @@ app.config.errorHandler = (err, _instance, info) => {
 }
 
 window.addEventListener('unhandledrejection', (event) => {
-  reportError(new Error(String(event.reason)), { type: 'unhandledrejection' })
+  const error = event.reason instanceof Error ? event.reason : new Error(String(event.reason))
+  reportError(error, { type: 'unhandledrejection' })
 })
 
 app.mount('#app')
