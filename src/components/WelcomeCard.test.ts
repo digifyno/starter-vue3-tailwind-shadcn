@@ -90,6 +90,13 @@ describe('WelcomeCard', () => {
       expect(wrapper.classes()).toContain('opacity-50')
     })
 
+    it('adds pointer-events-none class when disabled prop is true', () => {
+      const wrapper = mount(WelcomeCard, {
+        props: { title: 'Disabled', disabled: true },
+      })
+      expect(wrapper.classes()).toContain('pointer-events-none')
+    })
+
     it('sets aria-disabled when disabled', () => {
       const wrapper = mount(WelcomeCard, {
         props: { title: 'Disabled', disabled: true },
