@@ -114,8 +114,12 @@ describe('reportError', () => {
 
     it('fails silently when fetch rejects', async () => {
       ;(fetch as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Network error'))
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
       const { reportError } = await import('./error-tracking')
       expect(() => reportError(new Error('test'))).not.toThrow()
+      await Promise.resolve() // flush microtask queue so the .catch() runs
+      expect(consoleSpy).not.toHaveBeenCalled()
+      consoleSpy.mockRestore()
     })
 
     it('does not throw when fetch resolves with a non-ok response', async () => {
