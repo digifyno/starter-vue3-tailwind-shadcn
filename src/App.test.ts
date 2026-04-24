@@ -50,6 +50,20 @@ describe('App', () => {
     expect(button.attributes('aria-label')).toBe('Switch to dark mode')
   })
 
+  it('swaps icon SVG when dark mode is toggled', async () => {
+    document.documentElement.classList.add('dark')
+    const wrapper = mount(App)
+    const button = wrapper.find('button[aria-label]')
+    const svgsBefore = button.findAll('svg')
+    expect(svgsBefore.length).toBe(1)
+    const svgHtmlBefore = svgsBefore[0].element.outerHTML
+    await button.trigger('click')
+    const svgsAfter = button.findAll('svg')
+    expect(svgsAfter.length).toBe(1)
+    const svgHtmlAfter = svgsAfter[0].element.outerHTML
+    expect(svgHtmlAfter).not.toBe(svgHtmlBefore)
+  })
+
   it('documentation link has correct rel and target attributes', () => {
     const wrapper = mount(App)
     const link = wrapper.find('a[href]')
