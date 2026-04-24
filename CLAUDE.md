@@ -150,6 +150,13 @@ The toggle button uses `v-if="isDark"` to swap between sun and moon icons and se
 ### Type Safety
 `src/vite-env.d.ts` uses strict `DefineComponent` without `any` type parameters to avoid unsafe widening of Vue component types.
 
+### Client-Side Token Exposure
+`VITE_HUB_TOKEN` is a Vite build-time env var (`VITE_` prefix): Vite inlines its value into the production JS bundle at build time. The token is therefore visible to anyone who reads the minified output. This is intentional for client-side error reporting, but it imposes a security constraint:
+
+- The token **must** be a low-privilege, write-only credential scoped exclusively to `POST /hub/client-errors/report`.
+- It must **not** grant read access, admin actions, or any other Hub operations.
+- Treat it as a semi-public credential, not a secret.
+
 ## Testing
 
 Tests use **Vitest** with `@vue/test-utils`, `jsdom`, and **vitest-axe** (accessibility assertions). Run with `npm test`. Test files follow the `*.test.ts` pattern alongside source files.
