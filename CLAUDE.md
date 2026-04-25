@@ -1,3 +1,9 @@
+<!-- rsi-worker-metadata
+  workerId=1d4df3a0-3060-48b7-a9d4-f7cab02db961
+  productId=ced92709-47c9-484d-bcaa-2b2c4a90faed
+  scopeConfigHash=06cbc815be080494
+  generatedAt=2026-04-25T05:13:15.008Z
+-->
 # Vue 3 + Tailwind CSS Starter - Claude Development Guide
 
 ## Stack
