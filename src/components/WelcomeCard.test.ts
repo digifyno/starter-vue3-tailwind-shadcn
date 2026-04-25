@@ -46,6 +46,19 @@ describe('WelcomeCard', () => {
     expect(wrapper.find('button').text()).toBe('Action')
   })
 
+  it('renders all three named slots simultaneously', () => {
+    const wrapper = mount(WelcomeCard, {
+      slots: {
+        header: '<span data-testid="slot-header">Header Slot</span>',
+        default: '<span data-testid="slot-body">Body Slot</span>',
+        footer: '<span data-testid="slot-footer">Footer Slot</span>',
+      },
+    })
+    expect(wrapper.find('[data-testid="slot-header"]').text()).toBe('Header Slot')
+    expect(wrapper.find('[data-testid="slot-body"]').text()).toBe('Body Slot')
+    expect(wrapper.find('[data-testid="slot-footer"]').text()).toBe('Footer Slot')
+  })
+
   it('renders header slot content when provided', () => {
     const wrapper = mount(WelcomeCard, {
       slots: { header: '<span data-testid="custom-header">Custom Header</span>' },
