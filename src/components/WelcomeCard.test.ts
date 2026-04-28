@@ -77,6 +77,15 @@ describe('WelcomeCard', () => {
     expect(h2.exists()).toBe(false)
   })
 
+  it('renders description when header slot is provided', () => {
+    const wrapper = mount(WelcomeCard, {
+      props: { description: 'A description' },
+      slots: { header: '<span data-testid="slot-header">Slot Header</span>' },
+    })
+    expect(wrapper.find('[data-testid="slot-header"]').text()).toBe('Slot Header')
+    expect(wrapper.find('p').text()).toBe('A description')
+  })
+
   it('omits header section when no title and no header slot', () => {
     const wrapper = mount(WelcomeCard)
     // The header div only renders when title or header slot is provided
